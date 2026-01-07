@@ -1,0 +1,8 @@
+# copy python file and run it
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY myscript.py /app
+
+CMD ["python", "myscript.py"]

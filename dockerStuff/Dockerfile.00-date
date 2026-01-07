@@ -1,0 +1,4 @@
+# prints current date
+FROM alpine:latest
+
+CMD ["date"]

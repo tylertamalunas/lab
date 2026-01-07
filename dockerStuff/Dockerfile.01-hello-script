@@ -1,0 +1,8 @@
+# copy a shell script into image and run it
+FROM ubuntu:latest
+
+WORKDIR /app
+
+COPY myscript.sh /app
+
+CMD ["bash", "myscript.sh"]

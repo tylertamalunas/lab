@@ -1,0 +1,4 @@
+# printers a fixed string then exits
+FROM alpine:latest
+
+CMD ["echo", "this is a string!"]
