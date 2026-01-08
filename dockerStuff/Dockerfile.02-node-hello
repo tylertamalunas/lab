@@ -1,0 +1,10 @@
+# minimal HTTP server listening on one port
+FROM node:slim
+
+WORKDIR /app
+
+COPY server.js .
+
+CMD ["node", "server.js"]
+
+EXPOSE 8080
