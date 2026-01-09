@@ -1,0 +1,6 @@
+# app behavior changes based on env variable
+FROM alpine
+
+ENV MY_NAME="Default greeting."
+
+CMD echo "$MY_NAME"

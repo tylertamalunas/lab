@@ -1,0 +1,6 @@
+# dockerfile based on alpine python
+FROM python:alpine
+
+WORKDIR /app
+
+CMD ["echo", "this is alpine python"]

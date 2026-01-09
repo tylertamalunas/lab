@@ -1,0 +1,6 @@
+# using just python
+FROM python:slim
+
+WORKDIR /app
+
+CMD ["echo", "just python slim"]
