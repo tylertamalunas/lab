@@ -1,0 +1,10 @@
+# server reads port from an ENV variable instead of hard coded
+FROM node:slim
+
+WORKDIR /app
+
+COPY server2.js .
+
+ENV PORT=8080
+
+CMD ["node", "server2.js"]
