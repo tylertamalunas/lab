@@ -1,0 +1,11 @@
+# app increments a number stored in a file between runs
+
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY counter.py .
+
+RUN mkdir -p /counts
+
+CMD ["python", "counter.py"]
