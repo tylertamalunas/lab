@@ -33,11 +33,8 @@ Python scripts and exercises including:
 - Basic syntax and concepts (loops, conditionals, functions)
 - Data structures (lists, dictionaries, collections)
 - File interaction and utilities
-- **100 Days of Code** challenge projects:
-  - Band name generator
-  - Tip calculator  
-  - Treasure island game
-  - Rock paper scissors
+- **100 Days of Code** challenge projects
+  
 
 ### 🐳 Docker Examples (`dockerStuff/`)
 
