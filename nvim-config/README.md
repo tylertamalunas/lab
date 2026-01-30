@@ -11,7 +11,7 @@ Personal Neovim setup based on NvChad with custom plugins and configurations.
 
 2. Clone this repository:
    ```bash
-   git clone <your-repo-url> ~/.config/nvim
+   git clone https://github.com/tylertamalunas/lab.git ~/.config/nvim
    ```
 
 3. Start Neovim and let lazy.nvim install plugins:
