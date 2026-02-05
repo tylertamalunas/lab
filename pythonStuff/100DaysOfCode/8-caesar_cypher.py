@@ -3,26 +3,35 @@
 
 def encrypt(word, cypher):
      # convert to ASCII value with ord(), apply shift, convert back to letter with chr()
-     encrypted_word = ''
-     for char in word:
-         if 0 <= ord(char) - ord('a') <= 26
+    encrypted_word = ''
+    for char in word:
+        if 0 <= ord(char) - ord('a') <= 25:
             position = ord(char) - ord('a')
-            value = (position + cypher) % 26
-            encrypted_word += chr(value)
+            new_char = (position + cypher) % 26
+            encrypted_word += chr(new_char + ord('a'))
+        elif 0 <= ord(char) - ord('A') <= 25:
+            position = ord(char) - ord('A')
+            new_char = (position + cypher) % 26
+            encrypted_word += chr(new_char + ord('A'))
         else:
             encrypted_word += char
-     return encrypted_word
+    print(encrypted_word)
 
 def decrypt(encrypted_word, cypher):
-     decrypted_word = ''
-     for char in encrypted_word:
-         if 0 <= ord(char) - ord('a') <= 26
+
+    decrypted_word = ''
+    for char in encrypted_word:
+        if 0 <= ord(char) - ord('a') <= 25:
             position = ord(char) - ord('a')
-            value = (position - cypher) % 26
-            decrypted_word += chr(value)
+            new_char = (position - cypher) % 26
+            decrypted_word += chr(new_char + ord('a'))
+        elif 0 <= ord(char) - ord('A') <= 25:
+            position = ord(char) - ord('A')
+            new_char = (position - cypher) % 26
+            encrypted_word += chr(new_char + ord('A'))
         else:
             decrypted_word += char
-     return decrypted_word
+    print(decrypted_word)
 
 on = True
 while on:
@@ -31,14 +40,14 @@ while on:
         on = False
         print("Goodbye")
         break
-    user_word = input("What is the word you want to use?\n")
+
+    user_word = input("Type your message:\n")
+    cypher = int(input("What is the shift number?\n"))
 
     if method == 'encrypt':
-        cypher = int(input("What is the shift number?\n"))
-        print(encrypt(user_word, cypher))
+        encrypt(user_word, cypher)
     elif method == 'decrypt':
-        cypher = int(input("What is the shift number?\n"))
-        print(decrypt(user_word, cypher))
+        decrypt(user_word, cypher)
     else:
         print("Please pick a valid option.")
         
