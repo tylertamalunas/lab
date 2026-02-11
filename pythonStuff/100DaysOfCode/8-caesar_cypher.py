@@ -28,7 +28,7 @@ def decrypt(encrypted_word, cypher):
         elif 0 <= ord(char) - ord('A') <= 25:
             position = ord(char) - ord('A')
             new_char = (position - cypher) % 26
-            encrypted_word += chr(new_char + ord('A'))
+            decrypted_word += chr(new_char + ord('A'))
         else:
             decrypted_word += char
     print(decrypted_word)
