@@ -5,14 +5,16 @@ def calc(x, y, operation):
         return x / y
     elif operation == '+':
         return x + y
-    elif operation == '-'
+    elif operation == '-':
         return x - y
     else:
         return f"{operation} is not a valid operation."
 
 run = True
-x = float(input("What's the first number?: "))
+new_calculation = True
 while run:
+    if new_calculation:
+        x = float(input("What's the first number?: "))
     print("+")
     print("-")
     print("/")
@@ -22,18 +24,14 @@ while run:
     answer = calc(x, y, operation)
 
     print(f"{x} {operation} {y} = {answer}")
-    reuse_answer = input("Type 'y' to continue calculating with {answer}, or type 'n' to start a new calculation: ")
-        if reuse_answer == 'y':
-            x = answer
-        elif reuse_answer == 'n':
-            run = False
-        else:
-            print("Type 'y' or 'n' ")
+    reuse_answer = input(f"Type 'y' to continue calculating with {answer}, type 'n' to start a new calculation, or type 'q' to quit: ")
+    if reuse_answer == 'y':
+        new_calculation = False
+        x = answer
+    elif reuse_answer == 'n':
+        new_calculation = True
+    elif reuse_answer == 'q':
+        run = False
+    else:
+        print("Type 'y' or 'n' ")
 
-#TODO
-"""
-not finished, need to create function for while loop. 
-    - One branch restarts with new numbers, other continues to use answer.
-    - answer set to NONE initially?
-    - reset to NONE whenever new calculation 
-"""
