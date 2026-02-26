@@ -27,50 +27,94 @@ D    1b. if player or dealer or both have blackjack, game is immediately over, d
 import random
 
 def draw_card(hand, deck, cards):
-    new_card = cards[random.randint(0,len(cards))]
-    return new_hand.append(new_card)
+    new_card = cards[random.randint(0,len(cards)-1)]
+    return hand.append(new_card)
 
 def calc_score(hand, deck, cards):
     score = 0
+    ace_count = 0
     for card in hand:
+        if card == 'Ace':
+            ace_count += 1
         score += deck[cards.index(card)]
+    if score > 21 and ace_count > 0:
+        while score > 21 and ace_count > 0:
+            score -= 10
+            ace_count -= 1
     return score
-    
 
+def declare_winner(player_score, dealer_score):
+    if player_score > dealer_score and player_score < 22:
+        return "Player wins."
+    elif dealer_score > player_score and dealer_score < 22:
+        return "Dealer Wins."
+    else:
+        return "It's a tie."
 
-
-
-cards = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King']
-deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-run = True
-while run:
+play = True
+while play:
+    cards = ['Ace', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King']
+    deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    # Intro
     print("Welcome to Blackjack.")
+
+    # initial deal
     player_hand = []
     dealer_hand = []
-    draw_card(player, deck, cards)
-    draw_card(player, deck, cards)
-    draw_card(dealer, deck, cards)
-    draw_card(dealer, deck, cards)
+    draw_card(player_hand, deck, cards)
+    draw_card(player_hand, deck, cards)
+    draw_card(dealer_hand, deck, cards)
+    draw_card(dealer_hand, deck, cards)
     player_score = calc_score(player_hand, deck, cards)
     dealer_score = calc_score(dealer_hand, deck, cards)
-    print(f"The dealer has [{dealer_hand[0], Hidden}]")
+    print(f"The dealer has [{dealer_hand[0]}, Hidden]")
     print(f"You have {player_hand}")
-    if dealer_score == 21 and player_score == 21:
-        print("DRAW. Dealer and Player both have Blackjack.")
-        print(f"Dealer: {dealer_hand}")
-        print(f"You: player_hand}")
-    elif player_score == 21:
-        print("WINNER. Player has Blackjack!")
-        print(f"You: {player_hand}")
-    elif dealer_score == 21:
-        print("LOSE. Dealer has Blackjack!")
-        print(f"Dealer: {dealer_hand}")
-    action = 'hit'
-    else:
-        while player_score <=21
-            action = input(f"You have {player_score}. Do you want to 'hit' or 'stay'? ")
-            if action == hit:
-                draw_card(player, deck, cards)
-                player_score = calc_score(player_hand, deck, cards)
-            else:
 
+    # check for blackjack
+    if player_score == 21 and dealer_score == 21:
+        print("DRAW. Both players have Blackjack.")
+    elif player_score == 21 and dealer_score != 21:
+        print("Player wins with Blackjack!")
+    elif dealer_score == 21 and player_score != 21:
+        print("Dealer wins with Blackjack.")
+    else:
+
+        # Players turn
+        players_turn = True
+        while players_turn == True:
+            action = input(f"You have {player_score}. Do you want to 'hit' or 'stay'?\n")
+            if action == "hit":
+                draw_card(player_hand, deck, cards)
+                player_score = calc_score(player_hand, deck, cards)
+                print(f" You have {player_score} with {player_hand}")
+                if player_score > 21:
+                    print(f"Player busted. You lose.")
+                    players_turn = False
+                    action = 'stay'
+            elif action == "stay":
+                players_turn = False
+                print(f"You stayed with {player_score}")
+
+
+        # dealers turn
+        dealers_turn = True
+        if player_score > 21:
+            dealers_turn = False
+        while dealers_turn == True:
+            print(f"The dealer has {dealer_score} with {dealer_hand}")
+            if dealer_score > 21:
+                print("The Dealer busted. You win!")
+                dealers_turn = False
+            elif dealer_score >= 17:
+                print(f"The Dealer stays.")
+                dealers_turn = False
+                print(declare_winner(player_score, dealer_score))
+            else:
+                print("Dealer has to hit.")
+                draw_card(dealer_hand, deck, cards)
+                dealer_score= calc_score(dealer_hand, deck, cards)
+    keep_playing = input("Do you want to keep playing? 'y' or 'n': ")
+    if keep_playing == 'y':
+        continue
+    else:
+        play = False
