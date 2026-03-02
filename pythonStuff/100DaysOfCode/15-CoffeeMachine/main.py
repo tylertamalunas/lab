@@ -26,11 +26,11 @@ MENU = {
 
 resources = {
         "ingredients": {
-            "water": 300,
-            "milk": 200,
+            "water": 500,
+            "milk": 500,
             "coffee": 100,
             },
-        "cost": 5.00
+        "cost": 25.00
         }
 
 # function to check if there are enough resources to make drink
@@ -38,7 +38,9 @@ def check_resources(drink):
     resource_requirement = MENU[drink]['ingredients']
     for k,v in resource_requirement.items():
         if v > resources["ingredients"][k]:
-            return f"Sorry there is not enough {k}."
+            print(f"Sorry there is not enough {k}.")
+            return False
+    return True
 
 # checks if user deposited enough coins to make a drink
 def process_coins(drink):
@@ -48,32 +50,28 @@ def process_coins(drink):
     nickels = float(input("Nickels: "))
     pennies = float(input("Pennies: "))
     total_pay = quarters + dimes + nickels + pennies
-    if total_pay < MENU[drink][cost]:
+    if total_pay < MENU[drink]['cost']:
         return "Sorry that's not enough money. Money refunded."
-    elif total_pay == MENU[drink][cost]:
+    elif total_pay == MENU[drink]['cost']:
         make_coffee(drink, total_pay)
     else:
         make_coffee(drink, total_pay)
-        change = total_pay - MENU[drink][cost]
-        return f"Here is ${change.:2f} dollars in change."
+        change = total_pay - MENU[drink]['cost']
+        return f"Here is ${change:.2f} dollars in change."
 
 # makes drink and reduces resource by drink ingredients
 def make_coffee(drink, change):
-    for k,v in MENU[drink][ingredients]:
+    for k,v in MENU[drink]['ingredients'].items():
         resources[k] -= v
-    for v in MENU[drink]["cost"]:
-        resources['cost'] += change
-
+    resources['cost'] += change
+    return f"Your {drink} is ready."
 
 run = True
 while run:
     choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
-    if choice == 'espresso':
-        check_resources(choice)
-    elif choice == 'latte':
-        check_resources(choice)
-    elif choice == 'cappuccino':
-        check_resources(choice)
+    if choice == 'espresso' or 'latte' or 'cappuccino':
+        if check_resources(choice):
+            process_coins(choice)
     elif choice == 'off':
         # end program
         break
