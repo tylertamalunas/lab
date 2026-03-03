@@ -30,7 +30,7 @@ resources = {
             "milk": 500,
             "coffee": 100,
             },
-        "cost": 25.00
+        "money": 25.00
         }
 
 # function to check if there are enough resources to make drink
@@ -49,35 +49,37 @@ def process_coins(drink):
     dimes = float(input("Dimes: "))
     nickels = float(input("Nickels: "))
     pennies = float(input("Pennies: "))
-    total_pay = quarters + dimes + nickels + pennies
+    total_pay = (quarters * 0.25) + (dimes * 0.10) + (nickels * 0.05) + (pennies * 0.01)
     if total_pay < MENU[drink]['cost']:
-        return "Sorry that's not enough money. Money refunded."
+        print("Sorry that's not enough money. Money refunded.")
     elif total_pay == MENU[drink]['cost']:
-        make_coffee(drink, total_pay)
+        make_coffee(drink, MENU[drink]['cost'])
     else:
-        make_coffee(drink, total_pay)
         change = total_pay - MENU[drink]['cost']
-        return f"Here is ${change:.2f} dollars in change."
+        print(f"Here is ${change:.2f} dollars in change.")
+        make_coffee(drink, MENU[drink]['cost'])
 
 # makes drink and reduces resource by drink ingredients
 def make_coffee(drink, change):
     for k,v in MENU[drink]['ingredients'].items():
-        resources[k] -= v
-    resources['cost'] += change
-    return f"Your {drink} is ready."
+        resources['ingredients'][k] -= v
+    resources['money'] += change
+    print(f"Your {drink.title()} is ready.")
 
 run = True
 while run:
     choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
-    if choice == 'espresso' or 'latte' or 'cappuccino':
-        if check_resources(choice):
-            process_coins(choice)
-    elif choice == 'off':
+    if choice == 'off':
         # end program
         break
     elif choice == 'report':
         # Print report 
-        for k,v in resources.items():
-            print(f"{k.upper()}: {v}")
+        print(f"Water: {resources['ingredients']['water']}ml")
+        print(f"Milk: {resources['ingredients']['milk']}ml")
+        print(f"Coffee: {resources['ingredients']['coffee']}g")
+        print(f"Money: ${resources['money']:.2f}")
+    elif choice == 'espresso' or choice == 'latte' or choice == 'cappuccino':
+        if check_resources(choice) == True:
+            process_coins(choice)
     else:
         print("Select an option.")
