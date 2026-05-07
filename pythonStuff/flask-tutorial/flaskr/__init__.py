@@ -25,4 +25,12 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
 
+    #import and register db 
+    from . import db 
+    db.init_app(app)
+
+    # import and register blueprint
+    from . import auth
+    app.register_blueprint(auth.bp)
+
     return app

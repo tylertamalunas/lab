@@ -30,7 +30,8 @@ def close_db(e=None):
 
 
 # open_resource() opens file relative to flaskr package. (useful since you dont always know the location)
-# get_db returns a database connection
+# get_db returns a database connection.
+# THIS FUNCTION NEEDS TO BE REGISTERED WITH THE APP INSTANCE, OTHERWISE IT WONT BE USED BY THE APP.
 def init_db():
     db = get_db()
 
@@ -38,7 +39,8 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
 
 # click.command() defines a command line called init-db that calls init_db function and shows success message. 
-@click.command('init.db')
+# THIS FUNCTION NEEDS TO BE REGISTERED WITH THE APP INSTANCE, OTHERWISE IT WONT BE USED BY THE APP.
+@click.command('init-db')
 def init_db_command():
     """Clear the existing data and create new tables"""
     init_db()
@@ -48,3 +50,12 @@ def init_db_command():
 sqlite3.register_converter(
         "timestamp", lambda v: datetime.fromisoformat(v.decode())
         )
+
+
+# app.teardown_appcontext() tells Flask to call the () function when cleaning up after return
+# app.cli.add_command() adds a new cmd that can be called with flask command 
+# this function is called from the factory 
+def init_app(app):
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db_command)
+
